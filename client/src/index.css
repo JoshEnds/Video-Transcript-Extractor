@@ -94,8 +94,9 @@
 
   body {
     @apply font-sans antialiased;
-    background: var(--gradient-background);
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #16213e 75%, #1a1a2e 100%);
     color: var(--foreground);
+    min-height: 100vh;
   }
 }
 

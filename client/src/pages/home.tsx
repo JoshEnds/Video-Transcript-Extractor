@@ -120,62 +120,42 @@ export default function Home() {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      {/* Decorative background elements */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full filter blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-secondary/30 to-primary/20 rounded-full filter blur-3xl"></div>
-      </div>
-
       {/* Main content */}
       <div className="relative z-10 flex items-center justify-center min-h-screen px-4 py-12">
-        <Card className="glass-effect border-border/50 w-full max-w-2xl shadow-2xl">
-          <CardContent className="p-8">
+        <div className="w-full max-w-4xl text-center">
             {/* Header */}
-            <div className="text-center mb-8">
-              <div className="flex items-center justify-center mb-4">
-                <div className="gradient-bg rounded-xl p-3 shadow-lg">
-                  <Play className="text-primary-foreground h-6 w-6" />
-                </div>
-              </div>
-              <h1 className="text-4xl font-bold gradient-text mb-3" data-testid="heading-main">
-                Instant YouTube Transcripts
+            <div className="mb-16">
+              <h1 className="text-6xl md:text-7xl font-bold mb-4" data-testid="heading-main">
+                <span className="text-white">Free </span>
+                <span className="bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
+                  YouTube Transcript
+                </span>
+                <br />
+                <span className="text-white">Generator</span>
               </h1>
-              <p className="text-muted-foreground text-lg leading-relaxed" data-testid="text-description">
-                Paste a YouTube URL below to get its full transcript in seconds.
+              <p className="text-gray-400 text-xl mb-12" data-testid="text-description">
+                Instantly, without uploading video files.
               </p>
             </div>
 
             {/* Input form */}
-            <form onSubmit={handleExtract} className="space-y-6" data-testid="form-extract">
-              <div className="space-y-3">
-                <Label htmlFor="youtubeUrl" className="text-sm font-medium text-foreground">
-                  YouTube URL
-                </Label>
-                <div className="relative">
-                  <Input
-                    type="url"
-                    id="youtubeUrl"
-                    value={url}
-                    onChange={(e) => setUrl(e.target.value)}
-                    className={`w-full px-4 py-3 pr-10 transition-all duration-200 ${
-                      url && !isValidYouTubeUrl(url) 
-                        ? 'border-destructive focus:ring-destructive' 
-                        : 'border-border focus:ring-ring'
-                    }`}
-                    placeholder="e.g., https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                    disabled={isLoading}
-                    data-testid="input-youtube-url"
-                  />
-                  <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-                    <LinkIcon className="h-4 w-4 text-muted-foreground" />
-                  </div>
-                </div>
+            <form onSubmit={handleExtract} className="flex flex-col sm:flex-row gap-4 max-w-3xl mx-auto mb-8" data-testid="form-extract">
+              <div className="flex-1">
+                <Input
+                  type="url"
+                  id="youtubeUrl"
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  className="w-full h-14 px-6 bg-white/10 backdrop-blur border-white/20 text-white placeholder:text-gray-400 rounded-full focus:ring-2 focus:ring-purple-400 focus:border-transparent"
+                  placeholder="https://youtu.be/6umk3wMl6OY"
+                  disabled={isLoading}
+                  data-testid="input-youtube-url"
+                />
               </div>
-
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full gradient-bg text-primary-foreground font-semibold py-3 px-6 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                className="h-14 px-8 bg-white/20 backdrop-blur border border-white/30 text-white font-medium rounded-full hover:bg-white/30 transition-all duration-200 focus:ring-2 focus:ring-purple-400 whitespace-nowrap"
                 data-testid="button-extract"
               >
                 {isLoading ? (
@@ -188,132 +168,106 @@ export default function Home() {
                     Extracting...
                   </>
                 ) : (
-                  <>
-                    <Download className="mr-2 h-4 w-4" />
-                    Get Transcript
-                  </>
+                  "Get Video Transcript"
                 )}
               </Button>
             </form>
+            
+            <p className="text-gray-400 text-lg mb-12" data-testid="text-tagline">
+              Quick and simple. No catch.
+            </p>
 
             {/* Loading state */}
             {isLoading && (
-              <div className="text-center py-8 fade-in" data-testid="loading-state">
-                <div className="flex items-center justify-center space-x-3">
+              <div className="text-center py-12 fade-in" data-testid="loading-state">
+                <div className="flex items-center justify-center space-x-3 mb-6">
                   <div className="loading-dots">
                     <span></span>
                     <span></span>
                     <span></span>
                   </div>
-                  <span className="text-muted-foreground font-medium">Extracting transcript...</span>
+                  <span className="text-white font-medium text-lg">Extracting transcript...</span>
                 </div>
-                <div className="mt-4 bg-secondary rounded-full h-2 overflow-hidden">
-                  <div className="bg-primary h-full rounded-full animate-pulse" style={{ width: "70%" }}></div>
+                <div className="max-w-md mx-auto bg-white/10 rounded-full h-2 overflow-hidden">
+                  <div className="bg-gradient-to-r from-pink-400 to-purple-400 h-full rounded-full animate-pulse" style={{ width: "70%" }}></div>
                 </div>
               </div>
             )}
 
             {/* Error message */}
             {error && (
-              <div className="mt-6 p-4 bg-destructive/10 border border-destructive/20 rounded-lg slide-up" data-testid="error-message">
-                <div className="flex items-center space-x-2">
-                  <Shield className="h-4 w-4 text-destructive" />
-                  <span className="text-destructive font-medium" data-testid="text-error">{error}</span>
+              <div className="mt-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg slide-up max-w-md mx-auto" data-testid="error-message">
+                <div className="flex items-center justify-center space-x-2">
+                  <Shield className="h-4 w-4 text-red-400" />
+                  <span className="text-red-400 font-medium" data-testid="text-error">{error}</span>
                 </div>
               </div>
             )}
 
             {/* Results */}
             {transcriptData && (
-              <div className="mt-8 space-y-4 fade-in" data-testid="result-container">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-semibold text-foreground flex items-center" data-testid="heading-transcript">
-                    <FileText className="text-primary mr-2 h-5 w-5" />
-                    Transcript
-                  </h3>
-                  <Button
-                    onClick={handleCopy}
-                    variant="secondary"
-                    className="flex items-center space-x-2 hover:bg-accent transition-colors duration-200"
-                    data-testid="button-copy"
-                  >
-                    {isCopied ? (
-                      <>
-                        <Check className="h-4 w-4" />
-                        <span>Copied!</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="h-4 w-4" />
-                        <span>Copy to Clipboard</span>
-                      </>
-                    )}
-                  </Button>
-                </div>
+              <div className="mt-12 max-w-4xl mx-auto" data-testid="result-container">
+                <Card className="bg-white/10 backdrop-blur border-white/20 shadow-2xl">
+                  <CardContent className="p-8">
+                    <div className="flex items-center justify-between mb-6">
+                      <h3 className="text-xl font-semibold text-white flex items-center" data-testid="heading-transcript">
+                        <FileText className="text-purple-400 mr-2 h-6 w-6" />
+                        Transcript
+                      </h3>
+                      <Button
+                        onClick={handleCopy}
+                        className="bg-white/20 backdrop-blur border border-white/30 text-white hover:bg-white/30 transition-colors duration-200"
+                        data-testid="button-copy"
+                      >
+                        {isCopied ? (
+                          <>
+                            <Check className="h-4 w-4 mr-2" />
+                            <span>Copied!</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="h-4 w-4 mr-2" />
+                            <span>Copy to Clipboard</span>
+                          </>
+                        )}
+                      </Button>
+                    </div>
 
-                <div className="relative">
-                  <Textarea
-                    value={transcriptData.text}
-                    readOnly
-                    rows={12}
-                    className="w-full p-4 bg-muted border border-border rounded-lg resize-none focus:ring-2 focus:ring-ring text-foreground text-sm leading-relaxed"
-                    placeholder="Your transcript will appear here..."
-                    data-testid="textarea-transcript"
-                  />
-                  <div className="absolute bottom-3 right-3 text-xs text-muted-foreground bg-background/80 px-2 py-1 rounded" data-testid="text-word-count">
-                    {wordCount} words
-                  </div>
-                </div>
+                    <div className="relative mb-6">
+                      <Textarea
+                        value={transcriptData.text}
+                        readOnly
+                        rows={12}
+                        className="w-full p-4 bg-white/5 border border-white/10 rounded-lg resize-none focus:ring-2 focus:ring-purple-400 text-white text-sm leading-relaxed placeholder:text-gray-400"
+                        placeholder="Your transcript will appear here..."
+                        data-testid="textarea-transcript"
+                      />
+                      <div className="absolute bottom-3 right-3 text-xs text-gray-400 bg-black/30 px-2 py-1 rounded" data-testid="text-word-count">
+                        {wordCount} words
+                      </div>
+                    </div>
 
-                {/* Transcript metadata */}
-                <div className="bg-muted/50 rounded-lg p-4 space-y-2" data-testid="container-metadata">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Video Duration:</span>
-                    <span className="font-medium text-foreground" data-testid="text-duration">{transcriptData.duration}</span>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Language:</span>
-                    <span className="font-medium text-foreground" data-testid="text-language">{transcriptData.language}</span>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Confidence Score:</span>
-                    <span className="font-medium text-foreground" data-testid="text-confidence">{transcriptData.confidence}</span>
-                  </div>
-                </div>
+                    {/* Transcript metadata */}
+                    <div className="bg-white/5 border border-white/10 rounded-lg p-4 space-y-3" data-testid="container-metadata">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-gray-400">Video Duration:</span>
+                        <span className="font-medium text-white" data-testid="text-duration">{transcriptData.duration}</span>
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-gray-400">Language:</span>
+                        <span className="font-medium text-white" data-testid="text-language">{transcriptData.language}</span>
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-gray-400">Confidence Score:</span>
+                        <span className="font-medium text-white" data-testid="text-confidence">{transcriptData.confidence}</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             )}
 
-            {/* Feature highlights */}
-            <div className="mt-12 pt-8 border-t border-border">
-              <h4 className="text-center text-sm font-medium text-muted-foreground mb-6" data-testid="heading-features">
-                Why choose our transcript extractor?
-              </h4>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="text-center space-y-2">
-                  <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg">
-                    <Zap className="text-primary h-6 w-6" />
-                  </div>
-                  <h5 className="font-semibold text-foreground" data-testid="heading-feature-speed">Lightning Fast</h5>
-                  <p className="text-xs text-muted-foreground" data-testid="text-feature-speed">Get transcripts in seconds, not minutes</p>
-                </div>
-                <div className="text-center space-y-2">
-                  <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg">
-                    <Shield className="text-primary h-6 w-6" />
-                  </div>
-                  <h5 className="font-semibold text-foreground" data-testid="heading-feature-security">Secure & Private</h5>
-                  <p className="text-xs text-muted-foreground" data-testid="text-feature-security">No data stored, complete privacy</p>
-                </div>
-                <div className="text-center space-y-2">
-                  <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg">
-                    <Sparkles className="text-primary h-6 w-6" />
-                  </div>
-                  <h5 className="font-semibold text-foreground" data-testid="heading-feature-accuracy">High Accuracy</h5>
-                  <p className="text-xs text-muted-foreground" data-testid="text-feature-accuracy">AI-powered transcription technology</p>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        </div>
       </div>
     </div>
   );
