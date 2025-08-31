@@ -1,0 +1,67 @@
+Create a complete, single-file HTML web application for a "YouTube Transcript Extractor." The entire page should be built using HTML, Tailwind CSS, and vanilla JavaScript. No backend is needed; please mock the API response for demonstration.
+
+1. Page Structure & Styling:
+
+Layout: The entire page should have a light gray background (bg-slate-100). All content should be centered vertically and horizontally on the page.
+
+Main Card: The core UI should be a single card with a white background (bg-white), rounded corners (rounded-lg), a subtle shadow (shadow-md), and generous padding (p-8). The card should have a maximum width to look good on large screens (max-w-2xl).
+
+Typography: Use a clean, sans-serif font like Inter. The main heading should be large and bold.
+
+Responsiveness: The layout must be fully responsive and look great on both mobile and desktop screens.
+
+2. UI Components:
+
+Header:
+
+An <h1> with the text: "Instant YouTube Transcripts".
+
+A <p> with the text: "Paste a YouTube URL below to get its full transcript in seconds."
+
+Input Form:
+
+A text input field for the YouTube URL. It should be wide, have rounded corners, and clear placeholder text like "e.g., https://www.youtube.com/watch?v=...".
+
+A primary button below the input with the text "Get Transcript". It should be visually appealing (e.g., bg-blue-600, white text, with a hover effect hover:bg-blue-700).
+
+Loading State:
+
+A simple text element that says "Extracting transcript..." which appears only after the "Get Transcript" button is clicked and before the result is shown.
+
+Result Display (Initially Hidden):
+
+A div that contains the results. This entire section should only become visible after a transcript is successfully "fetched".
+
+A textarea to display the transcript text. It should be read-only, have a light gray background (bg-slate-50), and be tall enough to show a good amount of text with a scrollbar for overflow.
+
+A "Copy to Clipboard" button positioned above the textarea.
+
+Error Message:
+
+A text element styled in red (e.g., text-red-600) to display error messages. It should be hidden by default.
+
+3. JavaScript Logic (Client-Side Only):
+
+On "Get Transcript" button click:
+
+Hide any previous results or error messages.
+
+Validate the input. If it's empty or doesn't look like a YouTube URL, show an error message like "Please enter a valid YouTube URL." and stop.
+
+If validation passes, show the "Extracting transcript..." loading message.
+
+Mock API Call: Use setTimeout to simulate a 2-second network delay.
+
+After the delay:
+
+Hide the loading message.
+
+Show the results div.
+
+Populate the textarea with a long placeholder transcript (a few paragraphs of lorem ipsum is fine).
+
+On "Copy to Clipboard" button click:
+
+Copy the full content of the textarea to the user's clipboard.
+
+Provide user feedback by changing the button's text to "Copied!" for 3 seconds, then changing it back to "Copy to Clipboard".
